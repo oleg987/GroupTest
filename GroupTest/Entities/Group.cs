@@ -2,6 +2,6 @@
 
 public abstract class Group : StudyUnit
 {
-    public abstract ICollection<Student>? Students { get; set; }
-    public virtual IEnumerable<Flow>? Flows { get; set; }
+    public ICollection<Student>? Students { get; set; }
+    public IEnumerable<Flow>? Flows { get; set; }
 }
