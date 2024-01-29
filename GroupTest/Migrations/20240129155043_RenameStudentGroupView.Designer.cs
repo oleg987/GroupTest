@@ -2,6 +2,7 @@
 using GroupTest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GroupTest.Migrations
 {
     [DbContext(typeof(GroupContext))]
-    partial class GroupContextModelSnapshot : ModelSnapshot
+    [Migration("20240129155043_RenameStudentGroupView")]
+    partial class RenameStudentGroupView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("GroupsId");
 
-                    b.ToTable("FlowGroup", (string)null);
+                    b.ToTable("FlowGroup");
                 });
 
             modelBuilder.Entity("GroupTest.DbViews.StudentGroupView", b =>
@@ -68,7 +71,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("AcademicGroupId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GroupTest.Entities.StudyUnit", b =>
@@ -90,7 +93,7 @@ namespace GroupTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudyUnits", (string)null);
+                    b.ToTable("StudyUnits");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("StudyUnit");
 
@@ -109,7 +112,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentGroupView", (string)null);
+                    b.ToTable("StudentGroupView");
                 });
 
             modelBuilder.Entity("StudentStudyGroup", b =>
@@ -124,7 +127,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("StudyGroupsId");
 
-                    b.ToTable("StudentStudyGroup", (string)null);
+                    b.ToTable("StudentStudyGroup");
                 });
 
             modelBuilder.Entity("StudentSubGroup", b =>
@@ -139,7 +142,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("SubGroupsId");
 
-                    b.ToTable("StudentSubGroup", (string)null);
+                    b.ToTable("StudentSubGroup");
                 });
 
             modelBuilder.Entity("GroupTest.Entities.Flow", b =>

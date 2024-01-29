@@ -1,4 +1,5 @@
-﻿using GroupTest.Entities;
+﻿using GroupTest.DbViews;
+using GroupTest.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace GroupTest;
@@ -26,19 +27,34 @@ public class GroupContext : DbContext
 
     public DbSet<AcademicFlow> AcademicFlows { get; set; }
     
+    public DbSet<StudentGroupView> StudentGroups { get; set; }
+    
     
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<StudentGroupView>()
+            .HasNoKey()
+            .ToView("GroupStudentsView");
+        
         // Group configuration.
+
+        modelBuilder.Entity<Group>()
+            .HasMany(e => e.GroupStudents)
+            .WithMany()
+            .UsingEntity(nameof(StudentGroupView),
+                l => l.HasOne(typeof(Student)).WithMany().HasForeignKey(nameof(StudentGroupView.StudentId)),
+                r => r.HasOne(typeof(Group)).WithMany().HasForeignKey(nameof(StudentGroupView.GroupId)));
         
         // Academic.
+        
         modelBuilder.Entity<AcademicGroup>()
             .HasMany(e => e.Students)
             .WithOne(e => e.AcademicGroup)
             .HasForeignKey(e => e.AcademicGroupId);
         
         // SubGroup.
+        
         modelBuilder.Entity<SubGroup>()
             .HasOne(e => e.Parent)
             .WithMany(e => e.SubGroups)
@@ -49,6 +65,7 @@ public class GroupContext : DbContext
             .WithMany(e => e.SubGroups);
         
         // StudyGroup.
+        
         modelBuilder.Entity<StudyGroup>()
             .HasMany(e => e.Students)
             .WithMany(e => e.StudyGroups);

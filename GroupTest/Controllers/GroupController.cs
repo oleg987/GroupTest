@@ -29,6 +29,7 @@ public class GroupController : ControllerBase
     public async Task<IEnumerable<Group>> ListGroups(CancellationToken cancellationToken)
     {
         return await _ctx.Groups
+            .Include(g => g.GroupStudents)
             .ToListAsync(cancellationToken);
     }
     

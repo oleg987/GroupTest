@@ -2,6 +2,7 @@
 using GroupTest;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GroupTest.Migrations
 {
     [DbContext(typeof(GroupContext))]
-    partial class GroupContextModelSnapshot : ModelSnapshot
+    [Migration("20240129151600_AddStudentGroupView")]
+    partial class AddStudentGroupView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,20 +36,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("GroupsId");
 
-                    b.ToTable("FlowGroup", (string)null);
-                });
-
-            modelBuilder.Entity("GroupTest.DbViews.StudentGroupView", b =>
-                {
-                    b.Property<int>("GroupId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.ToTable((string)null);
-
-                    b.ToView("GroupStudentsView", (string)null);
+                    b.ToTable("FlowGroup");
                 });
 
             modelBuilder.Entity("GroupTest.Entities.Student", b =>
@@ -68,7 +58,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("AcademicGroupId");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("GroupTest.Entities.StudyUnit", b =>
@@ -90,26 +80,11 @@ namespace GroupTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StudyUnits", (string)null);
+                    b.ToTable("StudyUnits");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("StudyUnit");
 
                     b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("StudentGroupView", b =>
-                {
-                    b.Property<int>("GroupId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GroupId", "StudentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("StudentGroupView", (string)null);
                 });
 
             modelBuilder.Entity("StudentStudyGroup", b =>
@@ -124,7 +99,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("StudyGroupsId");
 
-                    b.ToTable("StudentStudyGroup", (string)null);
+                    b.ToTable("StudentStudyGroup");
                 });
 
             modelBuilder.Entity("StudentSubGroup", b =>
@@ -139,7 +114,7 @@ namespace GroupTest.Migrations
 
                     b.HasIndex("SubGroupsId");
 
-                    b.ToTable("StudentSubGroup", (string)null);
+                    b.ToTable("StudentSubGroup");
                 });
 
             modelBuilder.Entity("GroupTest.Entities.Flow", b =>
@@ -219,21 +194,6 @@ namespace GroupTest.Migrations
                         .IsRequired();
 
                     b.Navigation("AcademicGroup");
-                });
-
-            modelBuilder.Entity("StudentGroupView", b =>
-                {
-                    b.HasOne("GroupTest.Entities.Group", null)
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("GroupTest.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("StudentStudyGroup", b =>
