@@ -1,4 +1,5 @@
 ﻿using GroupTest.Entities;
+using GroupTest.Entities.StudyUnits;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,7 @@ public class GroupController : ControllerBase
     public async Task<IEnumerable<Group>> ListGroups(CancellationToken cancellationToken)
     {
         return await _ctx.Groups
+            .Where(g => g.GroupStudents.Any(s => s.Id == 1))
             .Include(g => g.GroupStudents)
             .ToListAsync(cancellationToken);
     }

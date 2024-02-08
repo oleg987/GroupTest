@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 using GroupTest;
+using GroupTest.Factories.Components;
+using GroupTest.Factories.Subjects;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,9 @@ builder.Services.AddDbContext<GroupContext>(opt =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<ISubjectFactory, SubjectFactory>();
+builder.Services.AddSingleton<IComponentFactory, ComponentFactory>();
 
 var app = builder.Build();
 

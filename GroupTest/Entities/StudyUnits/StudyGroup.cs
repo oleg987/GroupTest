@@ -1,4 +1,4 @@
-﻿namespace GroupTest.Entities;
+﻿namespace GroupTest.Entities.StudyUnits;
 
 public class StudyGroup : Group
 {

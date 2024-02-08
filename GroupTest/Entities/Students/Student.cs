@@ -1,4 +1,6 @@
-﻿namespace GroupTest.Entities;
+﻿using GroupTest.Entities.StudyUnits;
+
+namespace GroupTest.Entities.Students;
 
 public class Student
 {

@@ -1,4 +1,5 @@
 ﻿using GroupTest.Entities;
+using GroupTest.Entities.Students;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
